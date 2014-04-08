@@ -479,6 +479,51 @@ static void pstore_unregister_kmsg(void)
 	kmsg_dump_unregister(&pstore_dumper);
 }
 
+
+/* Export function to save device specific power up
+ * data
+ *
+ */
+
+int  pstore_annotate(const char *buf)
+{
+	unsigned cnt = strlen(buf);
+	const char *end = buf + cnt;
+
+	while (buf < end) {
+		unsigned long flags;
+		int ret;
+		if (cnt > psinfo->bufsize)
+			cnt = psinfo->bufsize;
+
+		if (oops_in_progress) {
+			if (pstore_cannot_wait(&psinfo->buf_lock))
+				break;
+		} else {
+			down_interruptible(&psinfo->buf_lock);
+		}
+		buf += cnt;
+		cnt = end - buf;
+		struct pstore_record record;
+		
+		pstore_record_init(&record, psinfo);
+		record.type = PSTORE_TYPE_ANNOTATE;
+		record.count = cnt;
+		record.buf += cnt;
+		
+		memcpy(psinfo->buf, buf, cnt);
+		ret = psinfo->write(&record);
+		up(&psinfo->buf_lock);
+
+		pr_debug("ret %d wrote bytes %d\n", ret, cnt);
+	}
+
+	return 0;
+
+}
+EXPORT_SYMBOL_GPL(pstore_annotate);
+
+
 #ifdef CONFIG_PSTORE_CONSOLE
 static void pstore_console_write(struct console *con, const char *s, unsigned c)
 {
@@ -743,6 +788,7 @@ void pstore_get_backend_records(struct pstore_info *psi,
 			kfree(record);
 			if (rc != -EEXIST || !quiet)
 				failed++;
+			pr_info("Found record type %d, psi name %s\n", record->type, psi->name);
 		}
 	}
 	if (psi->close)

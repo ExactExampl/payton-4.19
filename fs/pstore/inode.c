@@ -372,6 +372,10 @@ int pstore_mkfile(struct dentry *root, struct pstore_record *record)
 		scnprintf(name, sizeof(name), "powerpc-opal-%s-%llu",
 			  record->psi->name, record->id);
 		break;
+	case PSTORE_TYPE_ANNOTATE:
+		scnprintf(name, sizeof(name), "annotate-%s-%llu",
+			  record->psi->name, record->id);
+		break;
 	case PSTORE_TYPE_UNKNOWN:
 		scnprintf(name, sizeof(name), "unknown-%s-%llu",
 			  record->psi->name, record->id);
