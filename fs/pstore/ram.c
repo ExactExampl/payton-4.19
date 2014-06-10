@@ -282,20 +282,24 @@ static ssize_t ramoops_pstore_read(struct pstore_record *record)
 		}
 	}
 
-	if (!prz_ok(prz))
+	if (!prz_ok(prz)) {
 		prz = ramoops_get_next_prz(&cxt->cprz, &cxt->console_read_cnt,
 					   1, &record->id, &record->type,
 					   PSTORE_TYPE_CONSOLE, 0);
-
+		if (!prz_ok(prz))
+		        persistent_ram_annotation_merge(NULL);
+	}
 	if (!prz_ok(prz))
 		prz = ramoops_get_next_prz(&cxt->mprz, &cxt->pmsg_read_cnt,
 					   1, &record->id, &record->type,
 					   PSTORE_TYPE_PMSG, 0);
 
-	if (!prz_ok(prz))
+	if (!prz_ok(prz)) {
 		prz = ramoops_get_next_prz(&cxt->aprz, &cxt->annotate_read_cnt,
 		               1, &record->id, &record->type,
 					   PSTORE_TYPE_ANNOTATE, 0);
+		persistent_ram_annotation_merge(prz);
+	}
 
 	/* ftrace is last since it may want to dynamically allocate memory. */
 	if (!prz_ok(prz)) {
