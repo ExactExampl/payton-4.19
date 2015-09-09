@@ -984,3 +984,11 @@ config MOTOROLA_PAYTON_DTB
 	depends on MOTOROLA_DTB
 	help
 	  Say 'Y' here to enable compliation of the Motorola X4 DTB.
+
+config BOOTINFO
+	bool "Boot Information Feature"
+	default n
+	help
+	  This feature provides access to certain boot information
+	  from both kernel context (via function call) and user
+	  context (via /proc/bootinfo).
