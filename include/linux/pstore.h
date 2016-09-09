@@ -200,7 +200,15 @@ struct pstore_info {
 
 extern int pstore_register(struct pstore_info *);
 extern void pstore_unregister(struct pstore_info *);
+
+#ifdef CONFIG_PSTORE
 extern int pstore_annotate(const char *buf);
+#else
+static inline int pstore_annotate(const char *buf)
+{
+	return 0;
+}
+#endif
 
 struct pstore_ftrace_record {
 	unsigned long ip;
