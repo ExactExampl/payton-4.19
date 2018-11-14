@@ -455,6 +455,7 @@
 		#redistributor-regions = <1>;
 		redistributor-stride = <0x0 0x20000>;
 		interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+		arm,gicv3-plat-qcom-legacy;
 	};
 
 	timer {
