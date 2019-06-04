@@ -604,6 +604,10 @@ static const struct of_device_id mpm_gic_chip_data_table[] = {
 		.compatible = "qcom,mpm-gic-msm8953",
 		.data = mpm_msm8953_gic_chip_data,
 	},
+	{
+		.compatible = "qcom,mpm-gic-sdm630",
+		.data = mpm_sdm630_gic_chip_data,
+	},
 	{}
 };
 MODULE_DEVICE_TABLE(of, mpm_gic_chip_data_table);
