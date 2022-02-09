@@ -95,6 +95,12 @@ SoCs:
 - SDA660
   compatible = "qcom,sda660"
 
+- SDM630
+  compatible = "qcom,sdm630"
+
+- SDA630
+  compatible = "qcom,sda630"
+
 - BENGAL_IOT
   compatible = "qcom,bengal-iot"
 

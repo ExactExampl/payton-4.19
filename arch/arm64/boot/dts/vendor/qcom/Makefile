@@ -62,6 +62,36 @@ sdm660-internal-codec-cdp.dtb \
         sdm660-usbc-audio-rcm.dtb
 endif
 
+ifeq ($(CONFIG_ARCH_SDM630),y)
+dtb-$(CONFIG_ARCH_SDM630) += sdm630-cdp.dtb \
+sdm630-mtp.dtb \
+        sdm630-qrd.dtb \
+        sdm630-rcm.dtb \
+        sdm630-headset-jacktype-no-cdp.dtb \
+        sdm630-headset-jacktype-no-rcm.dtb \
+        sdm630-internal-codec-cdp.dtb \
+        sdm630-internal-codec-mtp.dtb \
+        sdm630-internal-codec-pm660a-cdp.dtb \
+        sdm630-internal-codec-pm660a-mtp.dtb \
+        sdm630-internal-codec-pm660a-rcm.dtb \
+        sdm630-internal-codec-rcm.dtb \
+        sdm630-pm660a-headset-jacktype-no-cdp.dtb \
+        sdm630-pm660a-headset-jacktype-no-rcm.dtb \
+        sdm630-pm660a-cdp.dtb \
+        sdm630-pm660a-mtp.dtb \
+        sdm630-pm660a-qrd.dtb \
+        sdm630-pm660a-rcm.dtb \
+        sdm630-usbc-audio-mtp.dtb \
+        sdm630-usbc-audio-rcm.dtb \
+        sda630-cdp.dtb \
+        sda630-mtp.dtb \
+        sda630-rcm.dtb \
+        sda630-pm660a-cdp.dtb \
+        sda630-pm660a-mtp.dtb \
+        sda630-pm660a-rcm.dtb \
+        sda630-pm660a-qrd-hdk.dtb 
+endif
+
 always		:= $(dtb-y)
 subdir-y	:= $(dts-dirs)
 clean-files    := *.dtb *.dtbo
